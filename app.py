@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import traceback
 
 from flask import Flask, render_template
@@ -38,4 +40,4 @@ def recommend(player_id, class_id):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run("127.0.0.1", "5000", threaded=False)
