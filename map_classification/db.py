@@ -4,6 +4,7 @@ import sqlite3
 
 from .api import *
 
+
 def create_db(name):
     print("using database '%s.db'" % (name))
     maps = get_all()
@@ -162,19 +163,17 @@ def get_tts(num_times=50, player_class=3):
     return playerset, tts, map_to_id, id_to_map
 
 
-def get_player_tts(player_id, player_class = 3):
+def get_player_tts(player_id, player_class=3):
     conn = sqlite3.connect("tempus.db")
     c = conn.cursor()
 
-    c.execute("SELECT maps.name as map_name, times.rank from maps INNER JOIN times ON maps.id = times.map_id WHERE times.user_id = ? AND times.class = ? AND times.rank <= 10", (player_id, player_class))
+    c.execute(
+        "SELECT maps.name as map_name, times.rank from maps INNER JOIN times ON maps.id = times.map_id WHERE times.user_id = ? AND times.class = ? AND times.rank <= 10",
+        (player_id, player_class),
+    )
     rows = c.fetchall()
 
     tts = []
     for row in rows:
-        tts.append(
-            {
-                "map_name": row[0],
-                "rank": int(row[1])
-            }
-        )
+        tts.append({"map_name": row[0], "rank": int(row[1])})
     return tts

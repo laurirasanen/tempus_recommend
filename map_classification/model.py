@@ -17,8 +17,8 @@ from .util import reduce_set, reduce_dict, cosine_similarity
 
 nfeatures = 600
 num_times = 50
-player_class = 3
-modelname = f"mapsim_{player_class}_top{num_times}_{nfeatures}f"
+player_class = 0
+modelname = ""
 FEATURE_MODEL = None
 M = None
 P = None
@@ -66,7 +66,7 @@ def _gen_training():
     global id_to_map
 
     # generate training data for neural net
-    playerset, tts, map_to_id, id_to_map = get_tts(num_times)
+    playerset, tts, map_to_id, id_to_map = get_tts(num_times, player_class)
     playermap, playermap_reverse = reduce_set(playerset)
     mapdata_reduced, mapdata_reduced_map, mapdata_reduced_map_reversed = reduce_dict(
         tts
@@ -154,6 +154,7 @@ def print_top_similar(positive, negative, n):
             n_printed += 1
         i += 1
 
+
 def get_similar(positive, n):
     global playerset
     global tts
@@ -188,21 +189,22 @@ def get_similar(positive, n):
     while n_printed < n or i == len(data):
         mapname = id_to_map[mapdata_reduced_map_reversed[sorted_maps[i][0]]]
         if mapname not in positive:
-            #print(n_printed, mapname.ljust(25), sorted_maps[i][1])
+            # print(n_printed, mapname.ljust(25), sorted_maps[i][1])
             n_printed += 1
-            similar.append(
-                {
-                    "name": mapname,
-                    "value": sorted_maps[i][1]
-                }
-            )
+            similar.append({"name": mapname, "value": sorted_maps[i][1]})
         i += 1
     return similar
 
 
-def load_model(class_id = 3):
+def load_model(class_id=3):
     global player_class
+    if player_class == class_id:
+        # already loaded
+        return
+    K.clear_session()
     player_class = class_id
+    global modelname
+    modelname = f"mapsim_{player_class}_top{num_times}_{nfeatures}f"
     global FEATURE_MODEL
     _gen_training()
     filename = modelname + "_weights.h5"
@@ -210,9 +212,11 @@ def load_model(class_id = 3):
     FEATURE_MODEL.load_weights(filename)
 
 
-def create_model(class_id = 3):
+def create_model(class_id=3):
     global player_class
     player_class = class_id
+    global modelname
+    modelname = f"mapsim_{player_class}_top{num_times}_{nfeatures}f"
     # create Skipgram model
     global FEATURE_MODEL
     _gen_training()
@@ -220,7 +224,7 @@ def create_model(class_id = 3):
     print(FEATURE_MODEL.summary())
 
 
-def train_model(class_id = 3):
+def train_model(class_id=3):
     global player_class
     player_class = class_id
     # train Skipgram model
