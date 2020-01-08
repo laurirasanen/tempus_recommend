@@ -27,7 +27,7 @@ def create_db(name):
         """CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, steamid TEXT, name TEXT, srank INTEGER, drank INTEGER)"""
     )
 
-    print("inserting data..")
+    print("inserting data, this will take literally years...")
     for x in range(0, len(maps)):
         # add map to maps table
         c.execute(
@@ -112,6 +112,7 @@ def create_db(name):
                         user["class_rank_info"]["4"]["rank"],
                     ),
                 )
+        print(f"Progress: {x}/{len(maps)} maps inserted")
 
     conn.commit()
     conn.close()

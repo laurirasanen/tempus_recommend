@@ -1,5 +1,6 @@
 import requests
 import time
+import math
 from operator import itemgetter
 import multiprocessing
 
@@ -11,6 +12,7 @@ requests_sent = None
 
 
 def get_all():
+    global requests_sent
     requests_sent = multiprocessing.Value("i", 0)
     maps = get_maps()
     if "error" in maps:
