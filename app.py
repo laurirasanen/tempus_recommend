@@ -16,6 +16,7 @@ def index():
 
 @app.route("/recommend/<int:player_id>/<int:class_id>")
 def recommend(player_id, class_id):
+    date = "2022-04-28" # TODO get from db
     try:
         recommendations = recommend_player(player_id, class_id)
 
@@ -28,14 +29,14 @@ def recommend(player_id, class_id):
             )
 
         for rec in recommendations:
-            rec["value"] = str(round(rec["value"], 2))
+            rec["value"] = str(round(rec["value"], 3))
 
-        return render_template("index.html", recommendations=recommendations)
+        return render_template("index.html", recommendations=recommendations, date=date)
 
     except Exception as e:
         traceback.print_exc()
         return render_template(
-            "index.html", errors=["Couldn't get recommendations", str(e)]
+            "index.html", errors=["Couldn't get recommendations", str(e),], date=date
         )
 
 

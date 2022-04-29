@@ -22,15 +22,14 @@ def recommend_player(player_id, class_id):
     # get recommendations and apply weight
     recommendations = {}
     for key, group in groups.items():
-        similar = mc.get_similar(group["names"], 10)
+        similar = mc.get_similar(group["names"], 0)
         for s in similar:
-            # Don't recommend maps where player already has tt
-            cont = False
+            # Scale maps where player already has tt down, so that
+            # #10 = 0.9, #9 = 0.8, ..., wr = 0.0
             for time in tts:
                 if s["name"] == time["map_name"]:
-                    cont = True
-            if cont:
-                continue
+                    s["value"] *= (time["rank"] - 1) / 10
+                    break
 
             s["value"] *= group["multiplier"]
 

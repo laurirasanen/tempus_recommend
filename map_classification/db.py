@@ -43,8 +43,8 @@ def create_db(name):
             ),
         )
 
+        # add soldier times to times table
         for i in range(0, len(maps[x]["times"]["soldier"])):
-            # add time to times table
             c.execute(
                 """INSERT OR REPLACE INTO times (id, map_id, user_id, class, rank, date, duration) VALUES (?, ?, ?, ?, ?, ?, ?)""",
                 (
@@ -57,30 +57,9 @@ def create_db(name):
                     maps[x]["times"]["soldier"][i]["duration"],
                 ),
             )
-            # add to user to users table
-            # this needs to be optimised
-            # looping through users is a bad idea..
-            user = {}
-            for u in users:
-                if (
-                    u["player_info"]["id"]
-                    == maps[x]["times"]["soldier"][i]["player_info"]["id"]
-                ):
-                    user = u
-            if "class_rank_info" in user:
-                c.execute(
-                    """INSERT OR REPLACE INTO users (id, steamid, name, srank, drank) VALUES (?, ?, ?, ?, ?)""",
-                    (
-                        user["player_info"]["id"],
-                        user["player_info"]["steamid"],
-                        user["player_info"]["name"],
-                        user["class_rank_info"]["3"]["rank"],
-                        user["class_rank_info"]["4"]["rank"],
-                    ),
-                )
 
+        # add demoman times to times table
         for i in range(0, len(maps[x]["times"]["demoman"])):
-            # add time to times table
             c.execute(
                 """INSERT OR REPLACE INTO times (id, map_id, user_id, class, rank, date, duration) VALUES (?, ?, ?, ?, ?, ?, ?)""",
                 (
@@ -93,26 +72,23 @@ def create_db(name):
                     maps[x]["times"]["demoman"][i]["duration"],
                 ),
             )
-            # add to user to users table
-            user = {}
-            for u in users:
-                if (
-                    u["player_info"]["id"]
-                    == maps[x]["times"]["demoman"][i]["player_info"]["id"]
-                ):
-                    user = u
-            if "class_rank_info" in user:
-                c.execute(
-                    """INSERT OR REPLACE INTO users (id, steamid, name, srank, drank) VALUES (?, ?, ?, ?, ?)""",
-                    (
-                        user["player_info"]["id"],
-                        user["player_info"]["steamid"],
-                        user["player_info"]["name"],
-                        user["class_rank_info"]["3"]["rank"],
-                        user["class_rank_info"]["4"]["rank"],
-                    ),
-                )
+
         print(f"Progress: {x}/{len(maps)} maps inserted")
+
+    # add users to users table
+    for x in range(0, len(users)):
+        if "class_rank_info" in users[x]:
+            c.execute(
+                """INSERT OR REPLACE INTO users (id, steamid, name, srank, drank) VALUES (?, ?, ?, ?, ?)""",
+                (
+                    users[x]["player_info"]["id"],
+                    users[x]["player_info"]["steamid"],
+                    users[x]["player_info"]["name"],
+                    users[x]["class_rank_info"]["3"]["rank"],
+                    users[x]["class_rank_info"]["4"]["rank"],
+                ),
+            )
+        print(f"Progress: {x}/{len(users)} users inserted")
 
     conn.commit()
     conn.close()

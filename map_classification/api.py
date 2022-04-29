@@ -9,6 +9,7 @@ apiurl = "https://tempus.xyz/api/"
 headers = {"Accept": "application/json"}
 time_start = time.time()
 requests_sent = None
+top_times = 50
 
 
 def get_all():
@@ -114,6 +115,8 @@ def get_times(_map):
                 return times
 
             i += 50
+            if i > top_times:
+                return times
         else:
             return times
 

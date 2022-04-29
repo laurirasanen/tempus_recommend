@@ -41,7 +41,7 @@
 
 <div id="heading">
 	<h1>Tempus map recommendations</h1>
-	<span>Database date (yyyy-mm-dd): 2020-01-08</span>
+	<span>Database date (yyyy-mm-dd): {{date}}</span>
 </div>
 
 <span>Player id</span>
@@ -60,7 +60,7 @@
 <button id="submit">Hit me</button>
 
 <div id="result">
-	{% for err in errors %}
+    {% for err in errors %}
         <span class="error">{{err}}</span><br />
     {% endfor %}
 	{% for rec in recommendations %}

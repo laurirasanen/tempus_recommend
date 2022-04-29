@@ -186,12 +186,15 @@ def get_similar(positive, n):
     n_printed = 0
     i = 0
     similar = []
-    while n_printed < n or i == len(data):
-        mapname = id_to_map[mapdata_reduced_map_reversed[sorted_maps[i][0]]]
-        if mapname not in positive:
-            # print(n_printed, mapname.ljust(25), sorted_maps[i][1])
-            n_printed += 1
-            similar.append({"name": mapname, "value": sorted_maps[i][1]})
+    while (n_printed < n or n == 0) and i < len(data):
+        try:
+            mapname = id_to_map[mapdata_reduced_map_reversed[sorted_maps[i][0]]]
+            if mapname not in positive:
+                # print(n_printed, mapname.ljust(25), sorted_maps[i][1])
+                n_printed += 1
+                similar.append({"name": mapname, "value": sorted_maps[i][1]})
+        except KeyError:
+            pass
         i += 1
     return similar
 
