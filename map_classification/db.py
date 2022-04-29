@@ -27,7 +27,7 @@ def create_db(name):
         """CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, steamid TEXT, name TEXT, srank INTEGER, drank INTEGER)"""
     )
 
-    print("inserting data, this will take literally years...")
+    print("inserting data")
     for x in range(0, len(maps)):
         # add map to maps table
         c.execute(
