@@ -154,3 +154,26 @@ def get_player_tts(player_id, player_class=3):
     for row in rows:
         tts.append({"map_name": row[0], "rank": int(row[1])})
     return tts
+
+
+def get_players():
+    conn = sqlite3.connect("tempus.db")
+    c = conn.cursor()
+
+    c.execute(
+        "SELECT id, steamid, name, srank, drank from users",
+    )
+    rows = c.fetchall()
+
+    players = []
+    for row in rows:
+        players.append(
+            {
+                "id": int(row[0]),
+                "steamid": row[1],
+                "name": row[2],
+                "srank": int(row[3]),
+                "drank": int(row[4]),
+            }
+        )
+    return players

@@ -4,3 +4,4 @@ keras
 sklearn
 tensorflow
 numpy
+frozen-flask
