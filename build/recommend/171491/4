@@ -1,0 +1,85 @@
+<!doctype html>
+
+<title>Tempus map recommendations</title> 
+<meta charset=utf-8> 
+
+<head>
+	<style type="text/css">
+		h1 {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+
+		#heading {
+			margin-bottom: 1rem;
+		}
+
+		.error {
+			color: red;
+		}
+
+		#class-id {
+			margin-left: 1.5rem;
+			width: 6rem;
+		}
+
+		#player-id {
+			margin-left: 0.1rem;
+			width: 6rem;
+		}
+
+		button {
+			min-width: 5rem;
+			min-height: 2.5rem;
+			cursor: pointer;
+			margin-left: 3.9rem;
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+		}
+	</style>
+</head>
+
+<div id="heading">
+	<h1>Tempus map recommendations</h1>
+	<span>Database date (yyyy-mm-dd): </span>
+</div>
+
+<span>Player id</span>
+<input id="player-id" type="number" min="0" value="0" />
+
+<br />
+
+<span>Class</span>
+<select id="class-id">
+	<option selected="true" value="3">Soldier</option>
+	<option value="4">Demoman</option>
+</select>
+
+<br />
+
+<button id="submit">Hit me</button>
+
+<div id="result">
+    
+        <span class="error">Couldn&#39;t recommend maps, do you have top times as the selected class?</span><br />
+    
+	
+</div>
+
+<script>
+	var playerId = document.querySelector('#player-id').value;
+	var classId = document.querySelector('#class-id').value;
+
+	document.querySelector('#player-id').addEventListener('change', (event) => {
+		playerId = event.target.value;
+	});
+
+	document.querySelector('#class-id').addEventListener('change', (event) => {
+		classId = event.target.value;
+	});
+
+	document.querySelector('#submit').addEventListener('click', (event) => {
+		event.preventDefault();
+		window.location.href=`/recommend/${playerId}/${classId}`
+	});
+</script>
