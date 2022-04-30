@@ -14,7 +14,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/recommend/<int:player_id>/<int:class_id>")
+@app.route("/recommend/<int:player_id>/<int:class_id>/")
 def player_page(player_id, class_id):
     date = "2022-04-28" # TODO get from db
     try:
