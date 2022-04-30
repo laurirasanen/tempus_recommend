@@ -13,3 +13,15 @@ You can also navigate directly to `laurirasanen.github.io/tempus_recommend/recom
 You can find your player id over at [tempus.xyz](https://tempus.xyz) as a part of the url after searching for a player.
 
 ![tempus.xyz player profile](readme/tempus-xyz.png)
+
+## Updating
+
+Update db and train model:
+
+```
+python update.py
+python train.py
+```
+
+- for flask hosting: `python app.py`
+- for static sites: `python freeze.py`
