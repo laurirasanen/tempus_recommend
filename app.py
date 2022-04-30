@@ -5,6 +5,7 @@ import traceback
 from flask import Flask, render_template
 
 app = Flask(__name__)
+app.config["FREEZER_DESTINATION"] = "docs"
 
 from recommend import recommend_player
 
