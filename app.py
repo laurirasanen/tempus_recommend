@@ -17,7 +17,7 @@ def index():
 
 @app.route("/recommend/<int:player_id>/<int:class_id>/")
 def player_page(player_id, class_id):
-    date = "2022-04-28" # TODO get from db
+    date = "2022-07-16" # TODO get from db
     try:
         recommendations = recommend_player(player_id, class_id)
 
