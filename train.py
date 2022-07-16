@@ -4,6 +4,12 @@ Script for updating model
 
 import os
 import map_classification as mc
+import multiprocessing
+
+
+def train_thread(class_id):
+    mc.create_model(class_id)
+    mc.train_model(class_id)
 
 
 if __name__ == "__main__":
@@ -17,10 +23,7 @@ if __name__ == "__main__":
     except FileNotFoundError as e:
         pass
 
-    # soldier
-    mc.create_model(3)
-    mc.train_model(3)
-
-    # demoman
-    mc.create_model(4)
-    mc.train_model(4)
+    # train soldier and demoman models in parallel
+    class_ids = [3, 4]
+    pool = multiprocessing.Pool(processes=os.cpu_count())
+    pool.map(train_thread, class_ids)

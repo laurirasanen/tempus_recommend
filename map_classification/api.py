@@ -1,7 +1,6 @@
 import requests
 import time
 import math
-from operator import itemgetter
 import multiprocessing
 
 
@@ -147,10 +146,3 @@ def get_users(maps):
                 users.append(t["player_info"])
     return users
 
-
-def user_thread(user_id):
-    r = requests.get(apiurl + "players/id/" + str(user_id) + "/rank", headers=headers)
-    global requests_sent
-    with requests_sent.get_lock():
-        requests_sent.value += 1
-    return r.json()
