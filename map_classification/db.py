@@ -24,7 +24,7 @@ def create_db(name):
     )
     # create users table
     c.execute(
-        """CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, steamid TEXT, name TEXT, srank INTEGER, drank INTEGER)"""
+        """CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, steamid TEXT, name TEXT)"""
     )
 
     print("inserting data")
@@ -77,17 +77,14 @@ def create_db(name):
 
     # add users to users table
     for x in range(0, len(users)):
-        if "class_rank_info" in users[x]:
-            c.execute(
-                """INSERT OR REPLACE INTO users (id, steamid, name, srank, drank) VALUES (?, ?, ?, ?, ?)""",
-                (
-                    users[x]["player_info"]["id"],
-                    users[x]["player_info"]["steamid"],
-                    users[x]["player_info"]["name"],
-                    users[x]["class_rank_info"]["3"]["rank"],
-                    users[x]["class_rank_info"]["4"]["rank"],
-                ),
-            )
+        c.execute(
+            """INSERT OR REPLACE INTO users (id, steamid, name) VALUES (?, ?, ?)""",
+            (
+                users[x]["id"],
+                users[x]["steamid"],
+                users[x]["name"],
+            ),
+        )
         print(f"Progress: {x}/{len(users)} users inserted")
 
     conn.commit()
@@ -161,19 +158,11 @@ def get_players():
     c = conn.cursor()
 
     c.execute(
-        "SELECT id, steamid, name, srank, drank from users",
+        "SELECT id, steamid, name from users",
     )
     rows = c.fetchall()
 
     players = []
     for row in rows:
-        players.append(
-            {
-                "id": int(row[0]),
-                "steamid": row[1],
-                "name": row[2],
-                "srank": int(row[3]),
-                "drank": int(row[4]),
-            }
-        )
+        players.append({"id": int(row[0]), "steamid": row[1], "name": row[2]})
     return players

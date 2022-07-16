@@ -137,59 +137,15 @@ def loop_times(_map, i):
 
 
 def get_users(maps):
-    userids = []
+    users = []
     for m in maps:
         for t in m["times"]["soldier"]:
-            if t["player_info"]["id"] not in userids:
-                userids.append(t["player_info"]["id"])
+            if len([u for u in users if u["id"] == t["player_info"]["id"]]) == 0:
+                users.append(t["player_info"])
         for t in m["times"]["demoman"]:
-            if t["player_info"]["id"] not in userids:
-                userids.append(t["player_info"]["id"])
-    global requests_sent
-    with requests_sent.get_lock():
-        requests_sent.value = 0
-    global time_start
-    time_start = time.time()
-    pool = multiprocessing.Pool(
-        processes=4, initializer=init, initargs=(requests_sent,)
-    )
-    all_users = []
-    for i in pool.imap(user_thread, userids):
-        all_users.append(i)
-        time_passed = math.floor(time.time() - time_start)
-        time_remaining = math.floor(
-            (time_passed / (len(all_users))) * (len(userids) - len(all_users))
-        )
-        if time_passed > 60:
-            time_passed = (
-                str(math.floor(time_passed / 60)) + "m" + str(time_passed % 60) + "s"
-            )
-        else:
-            time_passed = str(time_passed) + "s"
-        if time_remaining > 60:
-            time_remaining = (
-                str(math.floor(time_remaining / 60))
-                + "m"
-                + str(time_remaining % 60)
-                + "s"
-            )
-        else:
-            time_remaining = str(time_remaining) + "s"
-        print(
-            "progress: %d/%d users, time passed: %s (estimated remaining: %s)"
-            % (len(all_users), len(userids), time_passed, time_remaining)
-        )
-        if len(all_users) == len(userids):
-            print(
-                "finished getting users in %s, requests sent: %d (%f req/s)"
-                % (
-                    time_passed,
-                    requests_sent.value,
-                    requests_sent.value / math.floor(time.time() - time_start),
-                )
-            )
-
-    return all_users
+            if len([u for u in users if u["id"] == t["player_info"]["id"]]) == 0:
+                users.append(t["player_info"])
+    return users
 
 
 def user_thread(user_id):
