@@ -4,7 +4,7 @@ import math
 import multiprocessing
 
 
-apiurl = "https://tempus.xyz/api/"
+apiurl = "https://tempus2.xyz/api/v0/"
 headers = {"Accept": "application/json"}
 time_start = time.time()
 requests_sent = None
@@ -73,7 +73,7 @@ def init(args):
 
 
 def maps_thread(_map):
-    times = get_times(_map["id"])
+    times = get_times(_map["name"])
     return {"map": _map, "times": times}
 
 
@@ -123,8 +123,8 @@ def get_times(_map):
 def loop_times(_map, i):
     r = requests.get(
         apiurl
-        + "maps/id/"
-        + str(_map)
+        + "maps/name/"
+        + _map
         + "/zones/typeindex/map/1/records/list?start="
         + str(i),
         headers=headers,
