@@ -19,6 +19,10 @@ You can find your player id over at [tempus.xyz](https://tempus.xyz) as a part o
 Update db and train model:
 
 ```
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
 python update.py
 python train.py
 ```
