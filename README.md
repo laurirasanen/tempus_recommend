@@ -2,7 +2,7 @@
 
 Map classification ported from a jupyter notebook implementation by [Yoeri Poels](https://github.com/yoeripoels).
 
-Gives maps a similarity value by comparing top 50 times on every map and class. Recommends maps to players based on their existing top times. Only works for players who have top times on Tempus.
+Gives maps a similarity value by comparing top 50 times on every map and class. Recommends maps to players based on their existing top times. Only works for players who have top 50 times on Tempus.
 
 ## Github pages
 

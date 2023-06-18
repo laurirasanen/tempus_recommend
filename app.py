@@ -25,7 +25,7 @@ def player_page(player_id, class_id):
             return render_template(
                 "index.html",
                 errors=[
-                    "Couldn't recommend maps, do you have top times as the selected class?"
+                    "Couldn't recommend maps, do you have top 50 times as the selected class?"
                 ],
             )
 
