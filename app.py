@@ -19,7 +19,7 @@ def index():
 def player_page(player_id, class_id):
     date = "2023-06-18" # TODO get from db
     try:
-        recommendations = recommend_player(player_id, class_id)
+        recommendations = recommend_player(player_id, class_id, 50)
 
         if recommendations is None:
             return render_template(

@@ -1,12 +1,12 @@
 import map_classification as mc
 
 
-def recommend_player(player_id, class_id):
+def recommend_player(player_id, class_id, max_rank):
     # print()
     # print(f"Getting map recommendations for player {player_id}, class {'soldier' if class_id == 3 else 'demo'}")
     # print()
     mc.load_model(class_id)
-    tts = mc.get_player_tts(player_id, class_id)
+    tts = mc.get_player_tts(player_id, class_id, max_rank)
 
     if len(tts) == 0:
         return None
@@ -25,10 +25,10 @@ def recommend_player(player_id, class_id):
         similar = mc.get_similar(group["names"], 0)
         for s in similar:
             # Scale maps where player already has tt down, so that
-            # #10 = 0.9, #9 = 0.8, ..., wr = 0.0
+            # max_rank = ->1.0, wr = 0.0
             for time in tts:
                 if s["name"] == time["map_name"]:
-                    s["value"] *= (time["rank"] - 1) / 10
+                    s["value"] *= (time["rank"] - 1) / max_rank
                     break
 
             s["value"] *= group["multiplier"]

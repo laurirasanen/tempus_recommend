@@ -86,7 +86,7 @@ def _get_dimensions():
             # not enough times, skip this data
             if time == 0:
                 continue
-            # append reverse of tt height, i.e. rank 0 gets appended 10 times etc
+            # append reverse of rank, i.e. rank 0 gets appended num_times, etc
             for j in range(0, num_times - i):
                 x.append(mapid)
                 y_onehot = np.zeros(P)

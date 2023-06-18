@@ -137,13 +137,13 @@ def get_tts(num_times=50, player_class=3):
     return playerset, tts, map_to_id, id_to_map
 
 
-def get_player_tts(player_id, player_class=3):
+def get_player_tts(player_id, player_class=3, max_rank=50):
     conn = sqlite3.connect("tempus.db")
     c = conn.cursor()
 
     c.execute(
-        "SELECT maps.name as map_name, times.rank from maps INNER JOIN times ON maps.id = times.map_id WHERE times.user_id = ? AND times.class = ? AND times.rank <= 10",
-        (player_id, player_class),
+        "SELECT maps.name as map_name, times.rank from maps INNER JOIN times ON maps.id = times.map_id WHERE times.user_id = ? AND times.class = ? AND times.rank <= ?",
+        (player_id, player_class, max_rank),
     )
     rows = c.fetchall()
 
