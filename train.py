@@ -8,22 +8,21 @@ import multiprocessing
 
 
 def train_thread(class_id):
+    try:
+        os.remove(f"mapsim_{class_id}_top50_600f_weights.h5")
+    except FileNotFoundError as e:
+        pass
     mc.create_model(class_id)
     mc.train_model(class_id)
 
 
 if __name__ == "__main__":
-    try:
-        os.remove("mapsim_3_top50_600f_weights.h5")
-    except FileNotFoundError as e:
-        pass
-
-    try:
-        os.remove("mapsim_4_top50_600f_weights.h5")
-    except FileNotFoundError as e:
-        pass
+    # FIXME: soldier model never finishes in parallel
+    # not enough memory? :(
 
     # train soldier and demoman models in parallel
-    class_ids = [3, 4]
-    pool = multiprocessing.Pool(processes=os.cpu_count())
-    pool.map(train_thread, class_ids)
+    # class_ids = [3, 4]
+    # pool = multiprocessing.Pool(processes=os.cpu_count())
+    # pool.map(train_thread, class_ids)
+    train_thread(3)
+    train_thread(4)
