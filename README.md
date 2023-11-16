@@ -10,9 +10,9 @@ Current implementation is hosted at [laurirasanen.github.io/tempus_recommend](ht
 
 You can also navigate directly to `laurirasanen.github.io/tempus_recommend/recommend/<player_id>/<class_id>`, where class id is 3 for soldier or 4 for demoman.
 
-You can find your player id over at [tempus.xyz](https://tempus.xyz) as a part of the url after searching for a player.
+You can find your player id over at [tempus2.xyz](https://tempus2.xyz) as a part of the url after searching for a player.
 
-![tempus.xyz player profile](readme/tempus-xyz.png)
+![tempus2.xyz player profile](readme/tempus-xyz.png)
 
 ## Updating
 
