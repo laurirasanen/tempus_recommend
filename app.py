@@ -15,13 +15,13 @@ DB_DATE = "2023-11-16" # TODO get from db
 def index():
     return render_template("index.html", date=DB_DATE)
 
-@app.route("/player.html")
+@app.route("/player/")
 def player():
-    return render_template("player.html", date=DB_DATE)
+    return render_template("player.html", date=DB_DATE, to_index="../", player_id=0, class_id=3)
 
-@app.route("/map.html")
+@app.route("/map/")
 def map():
-    return render_template("map.html", date=DB_DATE)
+    return render_template("map.html", date=DB_DATE, to_index="../", map_name="jump_beef", class_id=3)
 
 
 @app.route("/player/<int:player_id>/<int:class_id>/")
@@ -32,20 +32,34 @@ def player_page(player_id, class_id):
         if recommendations is None:
             return render_template(
                 "player.html",
-                errors=[
-                    "Couldn't recommend maps, do you have top 50 times as the selected class?"
-                ],
+                errors=["Couldn't recommend maps, do you have top 50 times as the selected class?"],
+                date=DB_DATE,
+                to_index="../../../",
+                player_id=player_id,
+                class_id=class_id
             )
 
         for rec in recommendations:
             rec["value"] = str(round(rec["value"], 3))
 
-        return render_template("player.html", recommendations=recommendations, date=DB_DATE)
+        return render_template(
+            "player.html",
+            recommendations=recommendations,
+            date=DB_DATE,
+            to_index="../../../",
+            player_id=player_id,
+            class_id=class_id
+        )
 
     except Exception as e:
         traceback.print_exc()
         return render_template(
-            "player.html", errors=["Couldn't get recommendations", str(e),], date=DB_DATE
+            "player.html",
+            errors=["Couldn't get recommendations", str(e),],
+            date=DB_DATE,
+            to_index="../../../",
+            player_id=player_id,
+            class_id=class_id
         )
 
 
@@ -57,20 +71,34 @@ def map_page(map_name, class_id):
         if recommendations is None:
             return render_template(
                 "map.html",
-                errors=[
-                    f"Couldn't find similar maps, does '{map_name}' exist?"
-                ],
+                errors=[f"Couldn't find similar maps, does '{map_name}' exist?"],
+                date=DB_DATE,
+                to_index="../../../",
+                map_name=map_name,
+                class_id=class_id,
             )
 
         for rec in recommendations:
             rec["value"] = str(round(rec["value"], 3))
 
-        return render_template("map.html", recommendations=recommendations, date=DB_DATE)
+        return render_template(
+            "map.html",
+            recommendations=recommendations,
+            date=DB_DATE,
+            to_index="../../../",
+            map_name=map_name,
+            class_id=class_id
+        )
 
     except Exception as e:
         traceback.print_exc()
         return render_template(
-            "map.html", errors=["Couldn't get similar maps", str(e),], date=DB_DATE
+            "map.html",
+            errors=["Couldn't get similar maps", str(e),],
+            date=DB_DATE,
+            to_index="../../../",
+            map_name=map_name,
+            class_id=class_id
         )
 
 
