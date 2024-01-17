@@ -39,9 +39,6 @@ def player_page(player_id, class_id):
                 class_id=class_id
             )
 
-        for rec in recommendations:
-            rec["value"] = str(round(rec["value"], 3))
-
         return render_template(
             "player.html",
             recommendations=recommendations,
@@ -77,9 +74,6 @@ def map_page(map_name, class_id):
                 map_name=map_name,
                 class_id=class_id,
             )
-
-        for rec in recommendations:
-            rec["value"] = str(round(rec["value"], 3))
 
         return render_template(
             "map.html",

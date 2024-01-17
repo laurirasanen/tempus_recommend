@@ -29,6 +29,7 @@ mapdata_reduced_map = None
 mapdata_reduced_map_reversed = None
 map_to_id = None
 id_to_map = None
+map_cache = { 3: {}, 4: {} }
 
 
 def _init_model(features, maps, players):
@@ -155,47 +156,46 @@ def print_top_similar(positive, negative, n):
         i += 1
 
 
-def get_similar(positive, n):
+def get_similar(positive):
     global playerset
     global tts
     global map_to_id
     global id_to_map
+    global player_class
+    global map_cache
+
+    if positive in map_cache[player_class]:
+        return map_cache[player_class][positive]
+
     if map_to_id is None:
         playerset, tts, map_to_id, id_to_map = get_tts(num_times)
 
     data = _get_feature_vector(FEATURE_MODEL)
 
-    for mapname in positive:
-        if mapname not in map_to_id:
-            print(mapname + " not found!")
-            return
+    if positive not in map_to_id:
+        print(positive + " not found!")
+        return
 
     # to sum features on
-    map_features = np.zeros(len(data[0]))
-    for mapname in positive:
-        map_id = mapdata_reduced_map[map_to_id[mapname]]
-        map_features += data[map_id]
+    map_id = mapdata_reduced_map[map_to_id[positive]]
+    map_features = data[map_id]
 
     # build dict of similar maps:
     similarity = {}
     for i, features in enumerate(data):
         similarity[i] = cosine_similarity(map_features, features)
     sorted_maps = sorted(similarity.items(), key=lambda kv: -kv[1])
-    # print(sorted_maps)
-    # print("Most similar maps to " + str(positive) + " - " + str(negative) + ":")
-    n_printed = 0
-    i = 0
+
     similar = []
-    while (n_printed < n or n == 0) and i < len(data):
+    for sm in sorted_maps:
         try:
-            mapname = id_to_map[mapdata_reduced_map_reversed[sorted_maps[i][0]]]
-            if mapname not in positive:
-                # print(n_printed, mapname.ljust(25), sorted_maps[i][1])
-                n_printed += 1
-                similar.append({"name": mapname, "value": sorted_maps[i][1]})
+            mapname = id_to_map[mapdata_reduced_map_reversed[sm[0]]]
+            if mapname != positive:
+                similar.append({"name": mapname, "value": sm[1]})
         except KeyError:
             pass
-        i += 1
+
+    map_cache[player_class][positive] = similar
     return similar
 
 
