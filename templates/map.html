@@ -1,0 +1,89 @@
+<!doctype html>
+
+<title>Tempus map recommendations</title>
+<meta charset=utf-8>
+
+<head>
+    <style type="text/css">
+        h1 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        #heading {
+            margin-bottom: 1rem;
+        }
+
+        .error {
+            color: red;
+        }
+
+        #class-id {
+            margin-left: 1.5rem;
+            width: 6rem;
+        }
+
+        #player-id {
+            margin-left: 0.1rem;
+            width: 6rem;
+        }
+
+        button {
+            min-width: 5rem;
+            min-height: 2.5rem;
+            cursor: pointer;
+            margin-left: 3.9rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<div id="heading">
+    <h1>Tempus map recommendations</h1>
+    <span>Database date {{date}} (yyyy-mm-dd)</span><br />
+    <span>Insert a valid map name and class to get similar recommendations.</span><br />
+    <span><a href="/">&lt;-- Back to index</a></span>
+</div>
+
+<span>Map name</span>
+<input id="map-name" type="text" value="jump_beef" />
+
+<br />
+
+<span>Class</span>
+<select id="class-id">
+    <option selected="true" value="3">Soldier</option>
+    <option value="4">Demoman</option>
+</select>
+
+<br />
+
+<button id="submit">Hit me</button>
+
+<div id="result">
+    {% for err in errors %}
+    <span class="error">{{err}}</span><br />
+    {% endfor %}
+    {% for rec in recommendations %}
+    <span>{{rec["name"]}} - {{rec["value"]}}</span><br />
+    {% endfor %}
+</div>
+
+<script>
+    document.querySelector('#submit').addEventListener('click', (event) => {
+        event.preventDefault();
+        var mapName = document.querySelector('#map-name').value;
+        var classId = document.querySelector('#class-id').value;
+        window.location.pathname = `/map/${mapName}/${classId}`;
+    });
+
+    // assign current url values
+    let parts = window.location.pathname.split("/");
+    if (parts.length > 2) {
+        document.querySelector('#map-name').value = parts[2];
+    }
+    if (parts.length > 3) {
+        document.querySelector('#class-id').value = parts[3];
+    }
+</script>

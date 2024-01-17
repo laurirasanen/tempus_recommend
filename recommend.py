@@ -43,3 +43,9 @@ def recommend_player(player_id, class_id, max_rank):
         recommendations_list.append({"name": k, "value": v})
     recommendations_list.sort(key=lambda r: -r["value"])
     return recommendations_list
+
+
+def recommend_maps(map_name, class_id):
+    mc.load_model(class_id)
+    similar = mc.get_similar([map_name], 0)
+    return similar
