@@ -1,7 +1,7 @@
 import time
 from flask_frozen import Freezer
 from app import app
-from map_classification.db import get_players
+from map_classification.db import get_players, get_maps
 
 freezer = Freezer(app)
 
@@ -22,6 +22,24 @@ def player_page():
             elapsed = time.time() - time_start
             print(
                 f"progress: {x}/{len(players)}, elapsed: {round(elapsed)}s, eta: {round((elapsed / x) * len(players) - elapsed)}s"
+            )
+
+@freezer.register_generator
+def map_page():
+    maps = get_maps()
+    print(
+        f"generating {len(maps)} map pages"
+    )
+    x = 0
+    time_start = time.time()
+    for map in maps:
+        yield {"map_name": map["name"], "class_id": 3}
+        yield {"map_name": map["name"], "class_id": 4}
+        x += 1
+        if x % 50 == 0:
+            elapsed = time.time() - time_start
+            print(
+                f"progress: {x}/{len(maps)}, elapsed: {round(elapsed)}s, eta: {round((elapsed / x) * len(maps) - elapsed)}s"
             )
 
 

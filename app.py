@@ -15,11 +15,11 @@ DB_DATE = "2023-11-16" # TODO get from db
 def index():
     return render_template("index.html", date=DB_DATE)
 
-@app.route("/player")
+@app.route("/player.html")
 def player():
     return render_template("player.html", date=DB_DATE)
 
-@app.route("/map")
+@app.route("/map.html")
 def map():
     return render_template("map.html", date=DB_DATE)
 

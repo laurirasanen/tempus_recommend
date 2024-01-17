@@ -166,3 +166,18 @@ def get_players():
     for row in rows:
         players.append({"id": int(row[0]), "steamid": row[1], "name": row[2]})
     return players
+
+
+def get_maps():
+    conn = sqlite3.connect("tempus.db")
+    c = conn.cursor()
+
+    c.execute(
+        "SELECT id, name from maps",
+    )
+    rows = c.fetchall()
+
+    maps = []
+    for row in rows:
+        maps.append({"id": int(row[0]), "name": row[1]})
+    return maps
