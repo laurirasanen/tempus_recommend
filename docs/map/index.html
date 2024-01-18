@@ -43,7 +43,7 @@
     <h1>Tempus map recommendations</h1>
     <span>Database date 2023-11-16 (yyyy-mm-dd)</span><br />
     <span>Insert a valid map name and class to get similar recommendations.</span><br />
-    <span><a href="/">&lt;-- Back to index</a></span>
+    <span><a href="../">&lt;-- Back to index</a></span>
 </div>
 
 <span>Map name</span>
@@ -53,7 +53,7 @@
 
 <span>Class</span>
 <select id="class-id">
-    <option selected="true" value="3">Soldier</option>
+    <option value="3">Soldier</option>
     <option value="4">Demoman</option>
 </select>
 
@@ -74,12 +74,5 @@
         window.location.pathname = `/map/${mapName}/${classId}`;
     });
 
-    // assign current url values
-    let parts = window.location.pathname.split("/");
-    if (parts.length > 2) {
-        document.querySelector('#map-name').value = parts[2];
-    }
-    if (parts.length > 3) {
-        document.querySelector('#class-id').value = parts[3];
-    }
+    document.querySelector('#class-id').value = "3";
 </script>

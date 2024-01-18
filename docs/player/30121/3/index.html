@@ -41,21 +41,21 @@
 
 <div id="heading">
     <h1>Tempus map recommendations</h1>
-    <span>Database date  (yyyy-mm-dd)</span><br />
+    <span>Database date 2023-11-16 (yyyy-mm-dd)</span><br />
     <span>You can find your player id by looking up your profile on tempus, e.g. <a target="_blank"
             rel="noreferrer noopener"
             href="https://tempus2.xyz/players/68414">https://tempus2.xyz/players/68414</a></span><br />
-    <span><a href="/">&lt;-- Back to index</a></span>
+    <span><a href="../../../">&lt;-- Back to index</a></span>
 </div>
 
 <span>Player id</span>
-<input id="player-id" type="number" value="0" />
+<input id="player-id" type="number" value="30121" />
 
 <br />
 
 <span>Class</span>
 <select id="class-id">
-    <option selected="true" value="3">Soldier</option>
+    <option value="3">Soldier</option>
     <option value="4">Demoman</option>
 </select>
 
@@ -78,12 +78,5 @@
         window.location.pathname = `/player/${playerId}/${classId}`;
     });
 
-    // assign current url values
-    let parts = window.location.pathname.split("/");
-    if (parts.length > 2) {
-        document.querySelector('#player-id').value = parts[2];
-    }
-    if (parts.length > 3) {
-        document.querySelector('#class-id').value = parts[3];
-    }
+    document.querySelector('#class-id').value = "3";
 </script>
