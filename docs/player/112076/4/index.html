@@ -73,9 +73,10 @@
 <script>
     document.querySelector('#submit').addEventListener('click', (event) => {
         event.preventDefault();
-        var playerId = document.querySelector('#player-id').value;
-        var classId = document.querySelector('#class-id').value;
-        window.location.pathname = `/player/${playerId}/${classId}`;
+        let playerId = document.querySelector('#player-id').value;
+        let classId = document.querySelector('#class-id').value;
+        let basePath = window.location.href.split("/player")[0];
+        window.location.href = `${basePath}/player/${playerId}/${classId}`;
     });
 
     document.querySelector('#class-id').value = "4";

@@ -73,9 +73,10 @@
 <script>
     document.querySelector('#submit').addEventListener('click', (event) => {
         event.preventDefault();
-        var mapName = document.querySelector('#map-name').value;
-        var classId = document.querySelector('#class-id').value;
-        window.location.pathname = `/map/${mapName}/${classId}`;
+        let mapName = document.querySelector('#map-name').value;
+        let classId = document.querySelector('#class-id').value;
+        let basePath = window.location.href.split("/map")[0];
+        window.location.href = `${basePath}/map/${mapName}/${classId}`;
     });
 
     document.querySelector('#class-id').value = "{{class_id}}";
