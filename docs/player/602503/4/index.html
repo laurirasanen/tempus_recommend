@@ -1,0 +1,83 @@
+<!doctype html>
+
+<title>Tempus map recommendations</title>
+<meta charset=utf-8>
+
+<head>
+    <style type="text/css">
+        h1 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        #heading {
+            margin-bottom: 1rem;
+        }
+
+        .error {
+            color: red;
+        }
+
+        #class-id {
+            margin-left: 1.5rem;
+            width: 6rem;
+        }
+
+        #player-id {
+            margin-left: 0.1rem;
+            width: 6rem;
+        }
+
+        button {
+            min-width: 5rem;
+            min-height: 2.5rem;
+            cursor: pointer;
+            margin-left: 3.9rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<div id="heading">
+    <h1>Tempus map recommendations</h1>
+    <span>Database date 2024-02-06 (yyyy-mm-dd)</span><br />
+    <span>You can find your player id by looking up your profile on tempus, e.g. <a target="_blank"
+            rel="noreferrer noopener"
+            href="https://tempus2.xyz/players/68414">https://tempus2.xyz/players/68414</a></span><br />
+    <span><a href="../../../">&lt;-- Back to index</a></span>
+</div>
+
+<span>Player id</span>
+<input id="player-id" type="number" value="602503" />
+
+<br />
+
+<span>Class</span>
+<select id="class-id">
+    <option value="3">Soldier</option>
+    <option value="4">Demoman</option>
+</select>
+
+<br />
+
+<button id="submit">Hit me</button>
+
+<div id="result">
+    
+    <span class="error">Couldn&#39;t recommend maps, do you have top 50 times as the selected class?</span><br />
+    
+    
+</div>
+
+<script>
+    document.querySelector('#submit').addEventListener('click', (event) => {
+        event.preventDefault();
+        let playerId = document.querySelector('#player-id').value;
+        let classId = document.querySelector('#class-id').value;
+        let basePath = window.location.href.split("/player")[0];
+        window.location.href = `${basePath}/player/${playerId}/${classId}`;
+    });
+
+    document.querySelector('#class-id').value = "4";
+</script>
