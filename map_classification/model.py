@@ -2,10 +2,11 @@ from __future__ import division
 import numpy as np
 
 np.random.seed(13)
-
-import keras.backend as K
-from keras.models import Sequential
-from keras.layers import Dense, Embedding, Reshape, Lambda, Subtract
+import os
+os.environ["TF_USE_LEGACY_KERAS"] = "1"
+import tensorflow.keras.backend as K
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Input, Dense, Embedding, Reshape, Lambda, Subtract
 from tensorflow.keras.preprocessing.text import Tokenizer
 
 from .db import get_tts
