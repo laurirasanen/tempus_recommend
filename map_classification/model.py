@@ -6,11 +6,7 @@ np.random.seed(13)
 import keras.backend as K
 from keras.models import Sequential
 from keras.layers import Dense, Embedding, Reshape, Lambda, Subtract
-from keras.utils import np_utils
-from keras.utils.data_utils import get_file
-from keras.preprocessing.text import Tokenizer
-from keras.utils.vis_utils import model_to_dot
-from keras.preprocessing import sequence
+from tensorflow.keras.preprocessing.text import Tokenizer
 
 from .db import get_tts
 from .util import reduce_set, reduce_dict, cosine_similarity
@@ -210,7 +206,7 @@ def load_model(class_id=3):
     modelname = f"mapsim_{player_class}_top{num_times}_{nfeatures}f"
     global FEATURE_MODEL
     _gen_training()
-    filename = modelname + "_weights.h5"
+    filename = modelname + ".weights.h5"
     FEATURE_MODEL = _init_model(nfeatures, M, P)
     FEATURE_MODEL.load_weights(filename)
 
@@ -236,4 +232,4 @@ def train_model(class_id=3):
         _gen_training()
     x, y = _get_dimensions()
     result = FEATURE_MODEL.fit(x=x, y=y, batch_size=5, epochs=10, verbose=1)
-    FEATURE_MODEL.save_weights(modelname + "_weights.h5")
+    FEATURE_MODEL.save_weights(modelname + ".weights.h5")

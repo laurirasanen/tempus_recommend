@@ -9,7 +9,7 @@ import multiprocessing
 
 def train_thread(class_id):
     try:
-        os.remove(f"mapsim_{class_id}_top50_600f_weights.h5")
+        os.remove(f"mapsim_{class_id}_top50_600f.weights.h5")
     except FileNotFoundError as e:
         pass
     mc.create_model(class_id)
