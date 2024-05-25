@@ -15,6 +15,11 @@ DB_DATE = "2024-05-25" # TODO get from db
 def index():
     return render_template("index.html", date=DB_DATE)
 
+# this is just for static page freezing
+@app.route("/404.html")
+def notfound():
+    return render_template("404.html", date=DB_DATE)
+
 @app.route("/player/")
 def player():
     return render_template("player.html", date=DB_DATE, to_index="../", player_id=0, class_id=3)
