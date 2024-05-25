@@ -16,6 +16,7 @@ You can find your player id over at [tempus2.xyz](https://tempus2.xyz) as a part
 
 ## Updating
 
+Tested with Python@3.11.  
 Update db and train model:
 
 ```
