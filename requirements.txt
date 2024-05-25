@@ -6,6 +6,7 @@ charset-normalizer==3.3.2
 click==8.1.7
 Flask==3.0.3
 flatbuffers==24.3.25
+Frozen-Flask==1.0.2
 gast==0.5.4
 google-pasta==0.2.0
 grpcio==1.64.0
